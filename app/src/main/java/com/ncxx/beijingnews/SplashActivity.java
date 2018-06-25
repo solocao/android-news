@@ -1,5 +1,6 @@
 package com.ncxx.beijingnews;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.app.Activity;
@@ -11,8 +12,15 @@ import android.view.animation.ScaleAnimation;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.ncxx.beijingnews.activity.GuideActivity;
+import com.ncxx.beijingnews.utils.CacheUtils;
+
 public class SplashActivity extends Activity {
 
+    /**
+     * 静态常量
+     */
+    public static final String START_MAIN = "start_main";
     private RelativeLayout rl_splash_root;
 
     @Override
@@ -59,6 +67,21 @@ public class SplashActivity extends Activity {
 
         @Override
         public void onAnimationEnd(Animation animation) {
+            // 判断是否进入过主页面
+
+            boolean isStartMain = CacheUtils.getBoolean(SplashActivity.this,START_MAIN);
+            if(isStartMain){
+                // 如果进入过主页面，则直接进入
+
+
+            } else {
+                // 如果没有进入过主页面，进入引导页面
+                Intent intent = new Intent(SplashActivity.this,GuideActivity.class);
+                startActivity(intent);
+            }
+            // 关闭当前的Splash页面
+            finish();
+
             Toast.makeText(SplashActivity.this,"动画完成啦",Toast.LENGTH_LONG).show();
 
         }
